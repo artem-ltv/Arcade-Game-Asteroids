@@ -10,4 +10,6 @@ public class Bullet : MonoBehaviour
     private void Update() =>
         transform.Translate(ShotDirection * _speed * Time.deltaTime);
 
+    private void OnCollisionEnter2D(Collision2D collision) =>
+        Destroy(gameObject);
 }

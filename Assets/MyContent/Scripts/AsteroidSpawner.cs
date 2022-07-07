@@ -11,7 +11,7 @@ public class AsteroidSpawner : MonoBehaviour
 
     private void Start()
     {
-        _spawnRadius = 10;
+        _spawnRadius = 9;
         StartCoroutine(Spawn());
     }
 
@@ -19,10 +19,10 @@ public class AsteroidSpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        _spawnAmount++;
+        _spawnAmount = 2;
         for (int i = 0; i < _spawnAmount; i++)
         {
-            Vector2 spawnDirection = Random.insideUnitCircle.normalized * _spawnRadius;
+            Vector3 spawnDirection = Random.insideUnitCircle.normalized * _spawnRadius;
             float variance = Random.Range(-_trajectoryVariance, _trajectoryVariance);
 
             Quaternion rotation = Quaternion.AngleAxis(variance, Vector3.forward);
