@@ -5,7 +5,10 @@ using UnityEngine;
 public class Asteroid : MonoBehaviour
 {
     public Vector3 MoveDirection;
-
+    public float Size { set => _size = value;}
+    
+    public float MaxSize { get => _maxSize; }
+    
     [SerializeField] private float _minSize;
     [SerializeField] private float _maxSize;
     [SerializeField] private Sprite[] _sprites;
@@ -14,11 +17,11 @@ public class Asteroid : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private float _size;
     private float _moveSpeed;
+    private bool _isAlive;
 
     private void Awake() =>
         _size = Random.Range(_minSize, _maxSize);
     
-
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -27,6 +30,7 @@ public class Asteroid : MonoBehaviour
         _moveSpeed = _rigidbody.mass / 3f;
         transform.localScale = Vector3.one * _size;
         _spriteRenderer.sprite = _sprites[Random.Range(0, _sprites.Length)];
+        _isAlive = true;
     }
 
     private void FixedUpdate() =>
@@ -41,7 +45,10 @@ public class Asteroid : MonoBehaviour
                 CreateHalfAsteroid(_size, -45f);
                 CreateHalfAsteroid(_size, 45f);
             }
+            GameObject.FindObjectOfType<Score>().CalculationPoints(_size);
         }
+        gameObject.SetActive(false);
+        FindObjectOfType<ChekingAsteroids>().CheckLiveAsteroid();
         Destroy(gameObject);
     }
 
