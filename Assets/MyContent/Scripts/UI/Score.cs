@@ -23,7 +23,7 @@ public class Score : MonoBehaviour
 
     public void CalculationPoints(UFO ufo)
     {
-        _score += 20;
+        _score += 200;
         UpdateDisplayScore();
     }
 
