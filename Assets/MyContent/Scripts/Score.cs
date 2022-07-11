@@ -12,12 +12,21 @@ public class Score : MonoBehaviour
         if (sizeAsteroid <= 0.6f)
             _score += 100;
 
-        else if (sizeAsteroid <= 0.9)
+        else if (sizeAsteroid <= 0.9f)
             _score += 50;
 
         else
             _score += 20;
 
-        _scoreDisplay.text = _score.ToString();
+        UpdateDisplayScore();
     }
+
+    public void CalculationPoints(UFO ufo)
+    {
+        _score += 20;
+        UpdateDisplayScore();
+    }
+
+    private void UpdateDisplayScore() =>
+        _scoreDisplay.text = _score.ToString();
 }

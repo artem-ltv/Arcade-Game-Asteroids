@@ -10,6 +10,7 @@ public class Shooting : MonoBehaviour
         {
             Bullet bullet = Instantiate(_bullet, transform.position, Quaternion.identity);
             bullet.ShotDirection = transform.transform.up;
+            bullet.IsPlayersBullet = true;
         }
     }
 }

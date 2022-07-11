@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1510834662265242352}
   - component: {fileID: 457057050257398528}
   - component: {fileID: 7175571894407666284}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,8 +97,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShotDirection: {x: 0, y: 0}
-  _speed: 5
-  _lifeTime: 3
+  IsPlayersBullet: 0
+  _moveSpeed: 5
+  _playersBullet: {r: 0.12152922, g: 1, b: 0, a: 1}
+  _ufoBullet: {r: 1, g: 0, b: 0.017440319, a: 1}
 --- !u!58 &7175571894407666284
 CircleCollider2D:
   m_ObjectHideFlags: 0
