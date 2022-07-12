@@ -11,10 +11,13 @@ public class ObjectPool : MonoBehaviour
 
     protected void Initialize(GameObject prefab)
     {
-        GameObject spawned = Instantiate(prefab, _container.transform);
-        spawned.SetActive(false);
+        for(int i = 0; i<_capacity; i++)
+        {
+            GameObject spawned = Instantiate(prefab, _container.transform);
+            spawned.SetActive(false);
 
-        _pool.Add(spawned);
+            _pool.Add(spawned);
+        }
     }
 
     protected bool TryGetObject(out GameObject result)

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -5,8 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _turnSpeed;
-    [SerializeField] private int _typeControl;
+    [SerializeField] private Menu _menu;
 
+    private int _typeControl;
     private Rigidbody2D _rigidbody;
 
     private Vector2 _currentDirection;
@@ -37,15 +39,13 @@ public class PlayerController : MonoBehaviour
         if (transform.position.y < -borderScreenY)
             MoveToOppositeSide(transform.position.x, borderScreenY, 20f);
     }
-
-    private void MoveToOppositeSide(float borderScreenPointX, float borderScreenPointY, float maxDistanceDelta) =>
-        transform.position = Vector2.MoveTowards(transform.position, new Vector2(borderScreenPointX, borderScreenPointY), maxDistanceDelta);
-    
     
     private void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             _rigidbody.AddForce(transform.up * _moveSpeed);
+
+        _typeControl = PlayerPrefs.GetInt("TypeControl");
 
         if(_typeControl == 1)
         {
@@ -66,4 +66,7 @@ public class PlayerController : MonoBehaviour
             transform.up = _currentDirection;
         }
     }
+    private void MoveToOppositeSide(float borderScreenPointX, float borderScreenPointY, float maxDistanceDelta) =>
+        transform.position = Vector2.MoveTowards(transform.position, new Vector2(borderScreenPointX, borderScreenPointY), maxDistanceDelta);
+
 }

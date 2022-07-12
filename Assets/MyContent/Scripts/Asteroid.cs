@@ -5,9 +5,8 @@ using UnityEngine;
 public class Asteroid : MonoBehaviour
 {
     public Vector3 MoveDirection;
-    public float Size { set => _size = value;}
-    
-    public float MaxSize { get => _maxSize; }
+
+    public float MaxSize => _maxSize;
     
     [SerializeField] private float _minSize;
     [SerializeField] private float _maxSize;
@@ -34,6 +33,7 @@ public class Asteroid : MonoBehaviour
     private void FixedUpdate() =>
         _rigidbody.AddForce(MoveDirection * _moveSpeed);
 
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.TryGetComponent(out Bullet bullet))
@@ -50,15 +50,17 @@ public class Asteroid : MonoBehaviour
         gameObject.SetActive(false);
 
         FindObjectOfType<ChekingAsteroids>().CheckLiveAsteroid();
-
-        Destroy(gameObject);
     }
 
     private void CreateHalfAsteroid(float size, float angle)
     {
         size /= 2f;
-        Asteroid halfAsteroid = Instantiate(this, transform.position, transform.rotation);
-        halfAsteroid._size = size;
-        halfAsteroid.MoveDirection = Quaternion.Euler(0f, 0f, angle) * MoveDirection;
+        FindObjectOfType<AsteroidSpawner>().SpawnHalf(size, angle, gameObject.transform.position, gameObject.transform.rotation, MoveDirection);
+    }
+
+    public void SetSize(float value)
+    {
+        _size = value;
+        transform.localScale = Vector3.one * _size;
     }
 }
