@@ -4,10 +4,14 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     public event UnityAction<int> ChangingCountHealth;
-    //public event UnityAction Dying;
     public int Health { get => _health; }
-        
+
     [SerializeField] private int _health;
+
+    private ExplosionAudioManager _explosionSound;    
+
+    private void Start() =>
+        _explosionSound = FindObjectOfType<ExplosionAudioManager>();
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -27,6 +31,9 @@ public class Player : MonoBehaviour
             Die();
     }
 
-    public void Die() =>
+    public void Die()
+    {
+        _explosionSound.PlayAudioExplosion();
         Destroy(gameObject);
+    }
 }

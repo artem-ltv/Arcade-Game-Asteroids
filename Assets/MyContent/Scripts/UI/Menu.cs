@@ -31,29 +31,21 @@ public class Menu : MonoBehaviour
             _isActiveButtonContinue = true;
 
         _buttonContinue.interactable = _isActiveButtonContinue;
-
-        //_typeControlDisplay.text = _typeControl == 1 ? "Keyboard" : "Keyboard + mouse";
-
         Time.timeScale = _isActiveMenu ? 0f : 1f;
+        _typeControlDisplay.text = _typeControl == 1 ? "Keyboard" : "Keyboard + mouse";
+        SwitchingControl?.Invoke(_typeControl);
     }
 
     private void Update()
     {
         if(!_isActiveMenu)
             if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                _isActiveMenu = !_isActiveMenu;
-                _panelMenu.SetActive(_isActiveMenu);
-                Time.timeScale = 0f;
-            }
+                ShowMenu(true, 0f);    
     }
 
-    private void ContinueGame()
-    {
-        _isActiveMenu = !_isActiveMenu;
-        _panelMenu.SetActive(_isActiveMenu);
-        Time.timeScale = 1f;
-    }
+    private void ContinueGame() =>
+        ShowMenu(false, 1f);
+    
 
     private void ReloadScene()
     {
@@ -64,19 +56,26 @@ public class Menu : MonoBehaviour
     private void SwitchControl()
     {
         if (_typeControl == 1)
-        {
-            _typeControl = 2;
-            _typeControlDisplay.text = "Keyboard + mouse";
-        }
-
-        if (_typeControl == 2)
-        {
-            _typeControl = 1;
-            _typeControlDisplay.text = "Keyboard";
-        }
-        SwitchingControl?.Invoke(PlayerPrefs.GetInt("TypeControl"));
+            SetTypeControlAndTextButton(2, "Keyboard + mouse");
+        
+        else
+            SetTypeControlAndTextButton(1, "Keyboard");
+        
+        SwitchingControl?.Invoke(_typeControl);
     }
 
     private void Quit() => 
         Application.Quit();
+
+    private void SetTypeControlAndTextButton(int type, string text)
+    {
+        _typeControl = type;
+        _typeControlDisplay.text = text;
+    }
+
+    private void ShowMenu(bool isActive, float timeScale)
+    {
+        _panelMenu.SetActive(isActive);
+        Time.timeScale = timeScale;
+    }
 }

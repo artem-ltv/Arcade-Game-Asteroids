@@ -25,6 +25,12 @@ public class PlayerController : MonoBehaviour
         borderScreenY = Mathf.Abs(_borderScreen.y);
     }
 
+    private void OnEnable() =>
+        _menu.SwitchingControl += ChangeTypeControl;
+
+    private void OnDisable() =>
+        _menu.SwitchingControl -= ChangeTypeControl;
+
     private void Update()
     {
         if (transform.position.x > borderScreenX)
@@ -45,7 +51,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             _rigidbody.AddForce(transform.up * _moveSpeed);
 
-        _typeControl = PlayerPrefs.GetInt("TypeControl");
 
         if(_typeControl == 1)
         {
@@ -62,11 +67,13 @@ public class PlayerController : MonoBehaviour
             Vector2 position = transform.position;
             Vector2 direction = mousePosition - position;
 
-            _currentDirection = Vector2.Lerp(_currentDirection, direction, _turnSpeed * 3 * Time.deltaTime);
+            _currentDirection = Vector2.Lerp(_currentDirection, direction, _turnSpeed * 2 * Time.deltaTime);
             transform.up = _currentDirection;
         }
     }
     private void MoveToOppositeSide(float borderScreenPointX, float borderScreenPointY, float maxDistanceDelta) =>
         transform.position = Vector2.MoveTowards(transform.position, new Vector2(borderScreenPointX, borderScreenPointY), maxDistanceDelta);
 
+    private void ChangeTypeControl(int type) =>
+        _typeControl = type;
 }

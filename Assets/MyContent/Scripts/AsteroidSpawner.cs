@@ -4,8 +4,6 @@ using UnityEngine.Events;
 
 public class AsteroidSpawner : ObjectPool
 {
-    public event UnityAction<float> ChangingSize;
-
     [SerializeField] private Asteroid _asteriod;
     [SerializeField] private float _trajectoryVariance;
     [SerializeField] private ChekingAsteroids _chekingAsteroids;
@@ -64,8 +62,8 @@ public class AsteroidSpawner : ObjectPool
     {
         if (TryGetObject(out GameObject gameObject))
         {
-            if (gameObject.TryGetComponent(out Asteroid asteroid)) ;
-            SetAsteroid(asteroid, size, angle, position, rotation, moveDirection);
+            if (gameObject.TryGetComponent(out Asteroid asteroid)) 
+                SetAsteroid(asteroid, size, angle, position, rotation, moveDirection);
         }
     }
 

@@ -1,9 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UFOSpawner : MonoBehaviour
 {
+    public event UnityAction<bool> IsSpawningUFO;
+
     [SerializeField] private UFO _ufo;
+    [SerializeField] private UFOShooting _shooting;
 
     private float _topIndent;
     private float _bottomIndent;
@@ -29,14 +33,20 @@ public class UFOSpawner : MonoBehaviour
         StartCoroutine(RepeatSpawn());
     }
 
-    public void StartRepeatSpawn() =>
+    public void StartRepeatSpawn()
+    {
+        _shooting.gameObject.SetActive(false);
+        IsSpawningUFO?.Invoke(false);
         StartCoroutine(RepeatSpawn());
+    }
 
     private IEnumerator RepeatSpawn()
     {
         float delay = Random.Range(_minDelay, _maxDelay);
         yield return new WaitForSeconds(delay);
         Spawn();
+        _shooting.gameObject.SetActive(true);
+        IsSpawningUFO?.Invoke(true);
     }
 
     private void Spawn()
