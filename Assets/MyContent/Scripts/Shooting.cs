@@ -50,9 +50,10 @@ public class Shooting : ObjectPool
         {
             _isRecharged = false;
 
-            if (TryGetObject(out GameObject gameObject))
-                if (gameObject.TryGetComponent(out Bullet bullet))
-                    SetBullet(bullet);
+            if(_player != null)
+                if (TryGetObject(out GameObject gameObject))
+                    if (gameObject.TryGetComponent(out Bullet bullet))
+                        SetBullet(bullet);
 
             _audioShot.Play();
             yield return new WaitForSeconds(_shotDelay);

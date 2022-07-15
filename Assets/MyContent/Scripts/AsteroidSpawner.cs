@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class AsteroidSpawner : ObjectPool
 {
@@ -13,12 +12,11 @@ public class AsteroidSpawner : ObjectPool
     private float _spawnDelay;
     private bool _isInitial;
 
-    private IEnumerator Start()
+    private void Start()
     {
         Initialize(_asteriod.gameObject);
-        _spawnRadius = 9f;
+        _spawnRadius = 7.5f;
         _spawnDelay = 2f;
-        yield return new WaitForSeconds(_spawnDelay);
         SpawnInitialAsteroids();
     }
 
@@ -67,6 +65,14 @@ public class AsteroidSpawner : ObjectPool
         }
     }
 
+    public void SetAsteroid(Asteroid halfAsteroid, float size, float angle, Vector2 position, Quaternion rotation, Vector3 moveDirection)
+    {
+        halfAsteroid.gameObject.SetActive(true);
+        halfAsteroid.transform.position = position;
+        halfAsteroid.transform.rotation = rotation;
+        halfAsteroid.SetSize(size);
+        halfAsteroid.MoveDirection = Quaternion.Euler(0f, 0f, angle) * moveDirection;
+    }
     private void SetAsteroid(Asteroid asteroid, bool isInitial)
     {
         Vector3 spawnDirection = Random.insideUnitCircle.normalized * _spawnRadius;
@@ -81,12 +87,4 @@ public class AsteroidSpawner : ObjectPool
             asteroid.SetSize(asteroid.MaxSize);
     }
 
-    public void SetAsteroid(Asteroid halfAsteroid, float size, float angle, Vector2 position, Quaternion rotation, Vector3 moveDirection)
-    {
-        halfAsteroid.gameObject.SetActive(true);
-        halfAsteroid.transform.position = position;
-        halfAsteroid.transform.rotation = rotation;
-        halfAsteroid.SetSize(size);
-        halfAsteroid.MoveDirection = Quaternion.Euler(0f, 0f, angle) * moveDirection;
-    }
 }
