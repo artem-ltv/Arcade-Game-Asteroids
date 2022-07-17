@@ -151,3 +151,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: af63f121bb039f14d9f676af6e87947c, type: 3}
   - {fileID: 21300000, guid: 4ae8c758c62276341a8dff73a9267083, type: 3}
   - {fileID: 21300000, guid: cbddef5c6b483be4297e647402ecd751, type: 3}
+  _explosionEffect: {fileID: 5650046247543846383, guid: 5aeba1983fbf86b409db2a0c813c4f91, type: 3}

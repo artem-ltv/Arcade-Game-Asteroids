@@ -31,6 +31,14 @@ public class LosingPanel : MonoBehaviour
     {
         _losingPanel.SetActive(isActive);
         Time.timeScale = timeScale;
-    }
 
+        if (isActive)
+        {
+            UFO[] arrayLiveUFOs = FindObjectsOfType<UFO>();
+
+            if (arrayLiveUFOs != null)
+                foreach (var ufo in arrayLiveUFOs)
+                    ufo.GetComponent<AudioSource>().mute = true;
+        }
+    }
 }

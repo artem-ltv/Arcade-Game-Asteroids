@@ -11,6 +11,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private float _minSize;
     [SerializeField] private float _maxSize;
     [SerializeField] private Sprite[] _sprites;
+    [SerializeField] private ParticleSystem _explosionEffect;
 
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
@@ -50,7 +51,8 @@ public class Asteroid : MonoBehaviour
             FindObjectOfType<Score>().CalculationPoints(_size);
             _audioManager.PlayAudioExplosion(_size);
         }
-
+        ParticleSystem effect = Instantiate(_explosionEffect, transform.position, Quaternion.identity);
+        effect.Play();
         gameObject.SetActive(false);
 
         FindObjectOfType<ChekingAsteroids>().CheckLiveAsteroid();

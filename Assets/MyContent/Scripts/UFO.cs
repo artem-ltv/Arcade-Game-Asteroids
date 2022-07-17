@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class UFO : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem _explosionEffect;
+
     private ExplosionAudioManager _explosionAudio;
 
     private void Start() =>
@@ -19,6 +21,8 @@ public class UFO : MonoBehaviour
     private void Die()
     {
         _explosionAudio.PlayAudioExplosion();
+        ParticleSystem deathEffect = Instantiate(_explosionEffect, transform.position, Quaternion.identity);
+        deathEffect.Play();
         FindObjectOfType<UFOSpawner>().StartRepeatSpawn();
         Destroy(gameObject);
     }
