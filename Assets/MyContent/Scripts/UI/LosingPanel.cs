@@ -2,14 +2,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(AudioSource))]
 public class LosingPanel : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private GameObject _losingPanel;
     [SerializeField] private Button _buttonRestart;
 
-    private void Start() =>
+    private AudioSource _audioButton;
+
+    private void Start()
+    {
+        _audioButton = GetComponent<AudioSource>();
         _buttonRestart.onClick.AddListener(ReloadScene);   
+    }
     
 
     private void OnEnable() =>
@@ -23,6 +29,7 @@ public class LosingPanel : MonoBehaviour
 
     private void ReloadScene()
     {
+        _audioButton.Play();
         SwitchPanelVisibility(false, 1f);
         SceneManager.LoadScene(0);
     }

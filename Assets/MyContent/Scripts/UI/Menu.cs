@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(AudioSource))]
 public class Menu : MonoBehaviour
 {
     public event UnityAction<int> SwitchingControl;
@@ -18,6 +19,7 @@ public class Menu : MonoBehaviour
     private static int _typeControl = 1;
 
     private bool _isActiveButtonContinue;
+    private AudioSource _audioButton;
 
     private void Start()
     {
@@ -34,6 +36,7 @@ public class Menu : MonoBehaviour
         Time.timeScale = _isActiveMenu ? 0f : 1f;
         _typeControlDisplay.text = _typeControl == 1 ? "Keyboard" : "Keyboard + mouse";
         SwitchingControl?.Invoke(_typeControl);
+        _audioButton = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -43,18 +46,23 @@ public class Menu : MonoBehaviour
                 ShowMenu(true, 0f);    
     }
 
-    private void ContinueGame() =>
+    private void ContinueGame()
+    {
+        _audioButton.Play();
         ShowMenu(false, 1f);
+    }
     
 
     private void ReloadScene()
     {
+        _audioButton.Play();
         _isActiveMenu = false;
         SceneManager.LoadScene(0);
     }
 
     private void SwitchControl()
     {
+        _audioButton.Play();
         if (_typeControl == 1)
             SetTypeControlAndTextButton(2, "Keyboard + mouse");
         
@@ -64,8 +72,11 @@ public class Menu : MonoBehaviour
         SwitchingControl?.Invoke(_typeControl);
     }
 
-    private void Quit() => 
+    private void Quit()
+    {
+        _audioButton.Play();
         Application.Quit();
+    }
 
     private void SetTypeControlAndTextButton(int type, string text)
     {
@@ -75,6 +86,7 @@ public class Menu : MonoBehaviour
 
     private void ShowMenu(bool isActive, float timeScale)
     {
+        _audioButton.Play();
         _panelMenu.SetActive(isActive);
         Time.timeScale = timeScale;
     }
